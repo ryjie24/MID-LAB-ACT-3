@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authors and Books</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffce95;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 120vh;
+            flex-direction: column;
+            text-transform: uppercase;
+        }
+        .container {
+            background: transparent;
+            color: #000000;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(3px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 50px;
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #ffffff68;
+            color: rgb(0, 0, 0);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #ffffff;
+        }
+        .author {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .author strong {
+            font-size: 18px;
+            color: #333;
+        }
+        .book {
+            margin-left: 20px;
+            color: #555;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Authors and Books</h1>
+        <form action="/add_author" method="POST">
+            <h2>Add Author</h2>
+            <input type="text" name="name" placeholder="Author Name" required>
+            <button type="submit">Add Author</button>
+        </form>
+
+        <!-- Add Book Form -->
+        <form action="/add_book" method="POST">
+            <h2>Add Book</h2>
+            <input type="text" name="title" placeholder="Book Title" required>
+            <select name="author_id" required>
+                <option value="">Select Author</option>
+                {% for author in authors %}
+                    <option value="{{ author.id }}">{{ author.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Add Book</button>
+        </form>
+
+        <!-- Display Authors and Books -->
+        <h2>Authors</h2>
+        {% for author in authors %}
+            <div class="author">
+                <strong>{{ author.name }}</strong>
+                {% for book in author.books %}
+                    <div class="book">{{ book.title }}</div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
